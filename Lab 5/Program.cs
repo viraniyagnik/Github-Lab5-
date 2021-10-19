@@ -30,8 +30,35 @@ namespace Psim
 			Sensor s2 = new Sensor(2, silicon, 300);
 			Cell c2 = new Cell(1, 1, s2);
 
+
+
 			// Test transition surface (HandlePhonon)
+			Console.WriteLine("\t\t***Test trasition surface***");
+			Phonon p1 = new Phonon(1);
+			double px = 10;
+			p1.SetCoords(px, 1);
+			p1.SetDirection(0.5, 0.5);
+			Console.WriteLine($"position before {px}");
+			TransitionSurface ts = new TransitionSurface(SurfaceLocation.right, c2);
+			Cell c3 = ts.HandlePhonon(p1);
+			p1.GetCoords(out px, out double py);
+			Console.WriteLine($"position After {px}");
+			Console.WriteLine($"New cell {c3}");
+
+
 			// Test emit surface (HandlePhonon)
+			Console.WriteLine("\t\t***Test Emit surface***");
+			Phonon p2 = new Phonon(1);
+			p2.DriftTime = 10;
+			Console.WriteLine("Phonon properties prior to emit surface collision");
+			Console.WriteLine($"Active: {p2.Active}");
+			Console.WriteLine($"Drift Time: {p2.DriftTime}");
+			EmitSurface es = new EmitSurface(SurfaceLocation.left, c1, 300);
+			es.HandlePhonon(p2);
+			Console.WriteLine("Phonon properties after to emit surface collision");
+			Console.WriteLine(p2.Active);
+			Console.WriteLine(p2.DriftTime);
+
 
 		}
 	}
